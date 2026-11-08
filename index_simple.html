@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grid Inventory Prototype (simple, two inventories)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Grid Inventory <span class="badge">two inventories</span></h1>
+    <p class="sub">Drag an item to move it, <b>including into the other inventory</b> (it is re-homed there with the same rules as a move: auto-rotate, displace, slide). <kbd>R</kbd> while dragging to rotate, right-click to rotate in place, double-click to remove. Combine mode (or <kbd>Shift</kbd>) merges the dragged item into the one it is dropped on, in the same or the other inventory.</p>
+  </header>
+
+  <main>
+    <aside class="panel">
+      <section>
+        <h2>Add item</h2>
+        <div class="row">
+          <label>To
+            <select id="add-target">
+              <option value="0">Inventory A</option>
+              <option value="1">Inventory B</option>
+            </select>
+          </label>
+          <label>W <input id="add-w" type="number" min="1" max="16" value="2" /></label>
+          <label>H <input id="add-h" type="number" min="1" max="16" value="1" /></label>
+          <button id="btn-add" class="primary">Add</button>
+        </div>
+        <div class="presets">
+          <button data-size="1,1">1×1</button>
+          <button data-size="2,1">2×1</button>
+          <button data-size="1,2">1×2</button>
+          <button data-size="2,2">2×2</button>
+          <button data-size="3,1">3×1</button>
+          <button data-size="4,1">4×1</button>
+          <button data-size="3,2">3×2</button>
+          <button data-size="4,4">4×4</button>
+        </div>
+        <div class="row">
+          <button id="btn-random">Add random item</button>
+          <button id="btn-fill">Fill until full</button>
+        </div>
+        <p class="hint">Clicking an inventory selects it as the target.</p>
+      </section>
+
+      <section>
+        <h2>Combine</h2>
+        <label class="check"><input type="checkbox" id="combine-mode" /> Combine mode</label>
+        <p class="hint">Drop an item onto another one, in this or the other inventory, to replace both with one new item placed at the target's spot (in the target's inventory). Or hold <kbd>Shift</kbd> while dragging.</p>
+        <div class="row">
+          <label>Result W <input id="comb-w" type="number" min="1" max="16" value="2" /></label>
+          <label>Result H <input id="comb-h" type="number" min="1" max="16" value="2" /></label>
+        </div>
+        <div class="presets">
+          <button data-comb-size="1,1">1×1</button>
+          <button data-comb-size="2,1">2×1</button>
+          <button data-comb-size="2,2">2×2</button>
+          <button data-comb-size="3,1">3×1</button>
+          <button data-comb-size="3,2">3×2</button>
+          <button data-comb-size="4,2">4×2</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Log</h2>
+        <div id="log" class="log" aria-live="polite"></div>
+      </section>
+    </aside>
+
+    <section class="stage">
+      <div id="views" class="views" data-grids="2"></div>
+      <div class="legend">
+        <span><i class="sw ok"></i> valid drop</span>
+        <span><i class="sw bad"></i> invalid drop</span>
+        <span><i class="sw shift"></i> other items that will shift</span>
+        <span><i class="sw ok"></i> ⊕ combine result</span>
+        <span><i class="sw void"></i> non-existent cell</span>
+      </div>
+    </section>
+  </main>
+
+  <script src="inventory_simple.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
